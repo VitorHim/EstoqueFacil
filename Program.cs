@@ -5,8 +5,15 @@ namespace Estoque_Fácil
 {
     public class Program
     {
+
         //Lista para armazenar os produtos
         static List<Produto> produtos = new List<Produto>();
+
+        // Controle financeiro
+        static decimal totalVendas = 0;
+        static decimal totalDinheiro = 0;
+        static decimal totalCartao = 0;
+        static decimal totalPix = 0;
 
 
         static decimal LerDecimal(string mensagem)
@@ -70,8 +77,7 @@ namespace Estoque_Fácil
                         break;
 
                     case "3":
-                        Console.WriteLine("Controle financeiro em desenvolvimento.");
-                        Console.ReadKey();
+                        MenuFinanceiro();
                         break;
 
                     case "4":
@@ -469,6 +475,57 @@ namespace Estoque_Fácil
                                 item.Produto.QuantidadeEmEstoque -= item.Quantidade;
                             }
 
+                            string formaPagamento = "";
+
+                            while (formaPagamento != "1" && formaPagamento != "2" && formaPagamento != "3")
+                            {
+                                Console.WriteLine("\nForma de pagamento:");
+                                Console.WriteLine("1 - Dinheiro");
+                                Console.WriteLine("2 - Cartão");
+                                Console.WriteLine("3 - Pix");
+                                Console.Write("Escolha: ");
+
+                                formaPagamento = Console.ReadLine();
+
+                                if (formaPagamento != "1" && formaPagamento != "2" && formaPagamento != "3")
+                                {
+                                    Console.WriteLine("Opção inválida. Tente novamente.");
+                                }
+                            }
+                            decimal valorVenda = carrinho.Sum(i => i.Subtotal);
+
+                            totalVendas += valorVenda;
+
+                            if (formaPagamento == "1")
+                            {
+                                decimal valorRecebido;
+
+                                do
+                                {
+                                    valorRecebido = LerDecimal("Quanto o cliente entregou? R$ ");
+
+                                    if (valorRecebido < valorVenda)
+                                    {
+                                        Console.WriteLine("Valor insuficiente! Digite novamente.");
+                                    }
+
+                                } while (valorRecebido < valorVenda);
+
+                                decimal troco = valorRecebido - valorVenda;
+
+                                Console.WriteLine($"Troco: R$ {troco:F2}");
+
+                                totalDinheiro += valorVenda;
+                            }
+                            else if (formaPagamento == "2")
+                            {
+                                totalCartao += valorVenda;
+                            }
+                            else if (formaPagamento == "3")
+                            {
+                                totalPix += valorVenda;
+                            }
+
                             Console.WriteLine("Venda concluída!");
                             Console.WriteLine("Estoque atualizado com sucesso.");
                             Console.ReadKey();
@@ -501,5 +558,24 @@ namespace Estoque_Fácil
 
             } while (true);
         }
+        static void MenuFinanceiro()
+        {
+            Console.Clear();
+
+            Console.WriteLine("===== CONTROLE FINANCEIRO =====");
+            Console.WriteLine();
+            Console.WriteLine($"Total de vendas: R$ {totalVendas:F2}");
+            Console.WriteLine();
+            Console.WriteLine("Vendas por forma de pagamento:");
+            Console.WriteLine($"Dinheiro: R$ {totalDinheiro:F2}");
+            Console.WriteLine($"Cartão: R$ {totalCartao:F2}");
+            Console.WriteLine($"Pix: R$ {totalPix:F2}");
+
+            Console.WriteLine();
+            Console.WriteLine("Pressione qualquer tecla para voltar.");
+            Console.ReadKey();
+        }
+
     }
+    
 }
