@@ -15,7 +15,6 @@ namespace Estoque_Fácil
         static decimal totalCartao = 0;
         static decimal totalPix = 0;
 
-
         static decimal LerDecimal(string mensagem)
         {
             decimal valor;
@@ -32,6 +31,7 @@ namespace Estoque_Fácil
                 Console.WriteLine("Digite um valor monetário válido e não negativo.");
             }
         }
+        
         static int LerInteiro(string mensagem)
         {
             int valor;
@@ -48,6 +48,20 @@ namespace Estoque_Fácil
                 Console.WriteLine("Digite um número inteiro válido e não negativo.");
             }
         }
+
+        public static void ExibirHeader()
+        {
+            Console.WriteLine(@"
+█████  ████ █████  ███   ███  █   █ █████    █████  ███   ███  ███ █       
+█░░░░░█ ░░░░ ░█░░░█ ░░█ █ ░░█ █░  █░█░░░░░   █░░░░░█ ░░█ █ ░░░  █░░█░      
+████░░░███░░░ █░░░█░ ░█░█░ ░█░█░░ █░████░░░  ████░░█████░█░ ░░░ █░░█░░     
+█░░░░   ░░█   █░░ █░░ █░█░░█ ░█░░ █░█░░░░    █░░░░ █░░░█░█░░    █░░█░░     
+█████░████░░  █░░  ███ ░░██ █ ░███ ░█████░   █░░░░░█░░░█░░███  ███░█████   
+ ░░░░░ ░░░░ ░  ░░   ░░░ ░ ░░ ░  ░░░ ░░░░░░    ░░    ░░  ░░ ░░░  ░░░ ░░░░░  
+  ░░░░░ ░░░░    ░    ░░░   ░░ ░  ░░░  ░░░░░    ░     ░   ░  ░░░  ░░░ ░░░░░ ");
+            Console.WriteLine("");
+        }
+
         static void Main()
         {
             string opcao;
@@ -56,12 +70,13 @@ namespace Estoque_Fácil
             {
                 Console.Clear();
 
-                Console.WriteLine("=== ESTOQUE FÁCIL ===");
-                Console.WriteLine("1 - Gerenciar produtos");
-                Console.WriteLine("2 - Sistema de venda");
-                Console.WriteLine("3 - Controle financeiro");
-                Console.WriteLine("4 - Sair");
-
+                ExibirHeader();
+                Console.WriteLine("--------------------------------------------------");
+                Console.WriteLine(" [1] - Gerenciar produtos");
+                Console.WriteLine(" [2] - Sistema de venda");
+                Console.WriteLine(" [3] - Controle financeiro");
+                Console.WriteLine(" [4] - Sair");
+                Console.WriteLine("--------------------------------------------------");
                 Console.Write("Escolha uma opção: ");
                 opcao = Console.ReadLine();
 
@@ -92,6 +107,7 @@ namespace Estoque_Fácil
 
             } while (opcao != "4");
         }
+
         static void MenuProdutos()
         {
 
@@ -105,11 +121,12 @@ namespace Estoque_Fácil
                 Console.Clear();
 
                 Console.WriteLine("=== MENU DE PRODUTOS ===");
-                Console.WriteLine("1 - Cadastrar produto");
-                Console.WriteLine("2 - Listar produtos");
-                Console.WriteLine("3 - Pesquisar produto");
-                Console.WriteLine("4 - Voltar ao menu principal");
-
+                Console.WriteLine("--------------------------------------------------");
+                Console.WriteLine(" [1] - Cadastrar produto");
+                Console.WriteLine(" [2] - Listar produtos");
+                Console.WriteLine(" [3] - Pesquisar produto");
+                Console.WriteLine(" [4] - Voltar ao menu principal");
+                Console.WriteLine("--------------------------------------------------");
                 Console.Write("Escolha uma opção: ");
                 opcaoSelecionada = Console.ReadLine();
 
@@ -236,10 +253,13 @@ namespace Estoque_Fácil
             {
                 Console.Clear();
 
-                Console.WriteLine("1 - Adicionar produto");
-                Console.WriteLine("2 - Excluir item do carrinho");
-                Console.WriteLine("3 - Finalizar seleção");
-                Console.WriteLine("0 - Cancelar venda");
+                Console.WriteLine("=== MENU DE VENDAS ===");
+                Console.WriteLine("--------------------------------------------------");
+                Console.WriteLine(" [1] - Adicionar produto");
+                Console.WriteLine(" [2] - Excluir item do carrinho");
+                Console.WriteLine(" [3] - Finalizar seleção");
+                Console.WriteLine(" [0] - Cancelar venda");
+                Console.WriteLine("--------------------------------------------------");
                 Console.WriteLine();
 
                 decimal total = carrinho.Sum(item => item.Subtotal);
@@ -563,6 +583,7 @@ namespace Estoque_Fácil
             Console.Clear();
 
             Console.WriteLine("===== CONTROLE FINANCEIRO =====");
+            Console.WriteLine("--------------------------------------------------");
             Console.WriteLine();
             Console.WriteLine($"Total de vendas: R$ {totalVendas:F2}");
             Console.WriteLine();
@@ -570,6 +591,7 @@ namespace Estoque_Fácil
             Console.WriteLine($"Dinheiro: R$ {totalDinheiro:F2}");
             Console.WriteLine($"Cartão: R$ {totalCartao:F2}");
             Console.WriteLine($"Pix: R$ {totalPix:F2}");
+            Console.WriteLine("--------------------------------------------------");
 
             Console.WriteLine();
             Console.WriteLine("Pressione qualquer tecla para voltar.");
